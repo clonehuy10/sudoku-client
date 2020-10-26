@@ -15,6 +15,8 @@ const Cell = props => {
 
   if (data.readonly) {
     jsx += ' given'
+  } else {
+    jsx += ' userInput'
   }
 
   const handleOnChange = e => {

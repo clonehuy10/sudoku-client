@@ -9,19 +9,17 @@ const Sudoku = () => {
   const [table, setTable] = useState({
     rows: []
   })
-  const [raw, setRaw] = useState([])
-  const [solved, setSolved] = useState([])
+  // generate sudoku table and its solution
+  const [raw, setRaw] = useState(generator.makepuzzle())
+  const solved = generator.solvepuzzle(raw)
 
-  useEffect(() => {
-    // generate sudoku table and its solution
-    const rawTable = generator.makepuzzle()
-    const solvedTable = generator.solvepuzzle(rawTable)
+  const convert = (board) => {
     const result = { rows: [] }
 
     for (let i = 0; i < 9; i++) {
       const row = { cols: [], index: i }
       for (let j = 0; j < 9; j++) {
-        let value = rawTable[i * 9 + j]
+        let value = board[i * 9 + j]
         if (value !== null) {
           value += 1
         }
@@ -36,24 +34,49 @@ const Sudoku = () => {
       result.rows.push(row)
     }
 
-    setRaw(rawTable)
-    setSolved(solvedTable)
+    return result
+  }
+
+  useEffect(() => {
+    const result = convert(raw)
     setTable(result)
-  }, [])
+    console.log(solved)
+  }, [raw])
 
   const handleChange = e => {
-    console.log(table)
-    console.log(raw)
-    console.log(solved)
     const copy = Object.assign({}, table)
 
     copy.rows[e.row].cols[e.col].value = e.value
     setTable(copy)
   }
 
+  const handleClick = e => {
+    setRaw(solved)
+  }
+
+  const handleCheck = () => {
+    const convertSolved = solved.map(x => x + 1)
+
+    const check = table.rows.every(row => {
+      return row.cols.every(col => {
+        return col.value === convertSolved[col.row * 9 + col.col]
+      })
+    })
+
+    if (check) {
+      console.log('Niceee')
+    } else {
+      console.log('Nooooo')
+    }
+  }
+
   return (
     <div>
-      <Board handleChange={handleChange} table={table} />
+      <Board
+        handleChange={handleChange}
+        handleClick={handleClick}
+        handleCheck={handleCheck}
+        table={table} />
     </div>
   )
 }

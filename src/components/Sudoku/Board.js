@@ -3,7 +3,7 @@ import React from 'react'
 import Cell from './Cell'
 
 const Board = (props) => {
-  const { table, handleChange } = props
+  const { table, handleChange, handleClick, handleCheck } = props
 
   return (
     <div>
@@ -14,6 +14,8 @@ const Board = (props) => {
           ))}
         </div>
       ))}
+      <button onClick={handleClick}>GET SOLUTION NOW !!!!!!</button>
+      <button onClick={handleCheck}>Check Your Solution</button>
     </div>
   )
 }
