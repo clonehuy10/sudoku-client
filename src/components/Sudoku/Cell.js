@@ -21,14 +21,16 @@ const Cell = props => {
 
   const handleOnChange = e => {
     const value = e.target.value === '' ? '' : parseInt(e.target.value)
+    if (value > 9) {
+      return
+    }
     handleChange({ ...data, value: value })
   }
 
   return (
     <input
-      type='text'
-      maxLength={1}
-      pattern={[0 - 9]}
+      type='number'
+      max='9'
       className={jsx}
       value={data.value ? data.value : ''}
       disabled={data.readonly}
@@ -37,3 +39,13 @@ const Cell = props => {
 }
 
 export default Cell
+
+// const handleKeyPress = e => {
+//   if (e.key === 'Enter') {
+//     console.log('A')
+//   } else {
+//     console.log('B')
+//   }
+// }
+
+// onKeyPress={handleKeyPress}

@@ -5,56 +5,45 @@ import Board from './Board'
 import generator from 'sudoku'
 // makepuzzle, solvepuzzle, ratepuzzle
 
+// functions from Logic folder
+import { arrayToObject } from './Logic/arrayToObject'
+import { objectToArray } from './Logic/objectToArray'
+
 const Sudoku = () => {
   const [table, setTable] = useState({
     rows: []
   })
+
   // generate sudoku table and its solution
   const [raw, setRaw] = useState(generator.makepuzzle())
   const solved = generator.solvepuzzle(raw)
 
-  const convert = (board) => {
-    const result = { rows: [] }
-
-    for (let i = 0; i < 9; i++) {
-      const row = { cols: [], index: i }
-      for (let j = 0; j < 9; j++) {
-        let value = board[i * 9 + j]
-        if (value !== null) {
-          value += 1
-        }
-        const col = {
-          row: i,
-          col: j,
-          value: value,
-          readonly: value !== null
-        }
-        row.cols.push(col)
-      }
-      result.rows.push(row)
-    }
-
-    return result
-  }
-
   useEffect(() => {
-    const result = convert(raw)
-    setTable(result)
-    console.log(solved)
+    const convert = arrayToObject(raw)
+    setTable(convert)
   }, [raw])
 
   const handleChange = e => {
+    // copy the current table
     const copy = Object.assign({}, table)
 
+    // update the table with the copy
     copy.rows[e.row].cols[e.col].value = e.value
     setTable(copy)
+
+    // check if the game is over or not
+    if (checkSolution()) {
+      console.log('Niceee')
+    } else {
+      console.log('Nooooo')
+    }
   }
 
   const handleClick = e => {
     setRaw(solved)
   }
 
-  const handleCheck = () => {
+  const checkSolution = () => {
     const convertSolved = solved.map(x => x + 1)
 
     const check = table.rows.every(row => {
@@ -63,11 +52,7 @@ const Sudoku = () => {
       })
     })
 
-    if (check) {
-      console.log('Niceee')
-    } else {
-      console.log('Nooooo')
-    }
+    return check
   }
 
   return (
@@ -75,7 +60,6 @@ const Sudoku = () => {
       <Board
         handleChange={handleChange}
         handleClick={handleClick}
-        handleCheck={handleCheck}
         table={table} />
     </div>
   )
