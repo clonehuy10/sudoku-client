@@ -1,17 +1,19 @@
 import React, { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom'
 
-import Board from '../Sudoku/Board'
-import { forViewOnly } from '../Logic/Logic'
+import DataOnCurrentPage from '../Pagination/DataOnCurrentPage'
 import { showGame, deleteGame } from '../../api/game'
+import Pagination from '../Pagination/Pagination'
 
 const History = props => {
   // data is an array of OBJECTS
   const [data, setData] = useState([])
 
+  const [currentPage, setCurrentPage] = useState(1)
+  const [itemsPerPage] = useState(4)
+
   useEffect(() => {
     showGame(props.user)
-      .then(res => setData(res.data.games))
+      .then(res => setData(res.data.games.reverse()))
       .then(() => props.msgAlert({
         heading: 'View Games Success',
         message: 'Successful loaded all your games',
@@ -46,28 +48,47 @@ const History = props => {
       }))
   }
 
+  const handlePaginate = number => {
+    setCurrentPage(number)
+  }
+
+  const indexOfLast = currentPage * itemsPerPage
+  const indexOfFirst = indexOfLast - itemsPerPage
+  const currentData = data.slice(indexOfFirst, indexOfLast)
+
   return (
     <div>
-      {data.map(game => (
-        <div key={game._id}>
-          <Board
-            msgAlert={props.msgAlert}
-            table={forViewOnly(game.table)} />
-          <button id={game._id} onClick={handleDelete}>Delete</button>
-          {game.over
-            ? ''
-            : <Link to={{
-              pathname: '/sudokuReplay',
-              state: {
-                game: game,
-                user: props.user,
-                msgAlert: props.msgAlert
-              }
-            }}>Keep Playing This Board</Link>}
-        </div>
-      ))}
+      <DataOnCurrentPage
+        currentData={currentData}
+        handleDelete={handleDelete}
+      />
+      <Pagination
+        itemsPerPage={itemsPerPage}
+        currentPage={currentPage}
+        totalItems={data.length}
+        paginate={handlePaginate}
+      />
     </div>
   )
 }
 
 export default History
+
+// {data.map(game => (
+//   <div key={game._id}>
+//     <Board
+//       msgAlert={props.msgAlert}
+//       table={forViewOnly(game.table)} />
+//     <button id={game._id} onClick={handleDelete}>Delete</button>
+//     {game.over
+//       ? ''
+//       : <Link to={{
+//         pathname: '/sudokuReplay',
+//         state: {
+//           game: game,
+//           user: props.user,
+//           msgAlert: props.msgAlert
+//         }
+//       }}><button>Keep Playing</button></Link>}
+//   </div>
+// ))}

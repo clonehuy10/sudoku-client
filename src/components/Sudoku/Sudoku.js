@@ -45,7 +45,6 @@ const Sudoku = props => {
 
   useEffect(() => {
     if (gameApi !== null) {
-      console.log(gameApi)
       updateGame(objectToArray(table), gameApi, props.user)
     }
   }, [gameApi])
@@ -70,11 +69,11 @@ const Sudoku = props => {
           variant: 'success'
         })
       }
+    } else {
+      // make api call to update the table
+      // *******************************
+      updateGame(objectToArray(table), gameApi, props.user)
     }
-    console.log('gameApi', gameApi)
-    // make api call to update the table
-    // *******************************
-    updateGame(objectToArray(table), gameApi, props.user)
   }
 
   // Get the solution
@@ -107,7 +106,7 @@ const Sudoku = props => {
         handleChange={handleChange}
         table={table} />
 
-      <button onClick={handleClick}>GET SOLUTION NOW !!!!!!</button>
+      <button onClick={handleClick}>Give Up!</button>
     </div>
   )
 }

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 
 import Board from '../Sudoku/Board'
 import { updateGame } from '../../api/game'
@@ -9,6 +9,12 @@ const SudokuReplay = props => {
 
   const [gameApi, setGameApi] = useState(props.location.state.game)
   const [table, setTable] = useState(arrayToObject(game.table, game.solution))
+
+  useEffect(() => {
+    if (gameApi !== null) {
+      updateGame(objectToArray(table), gameApi, user)
+    }
+  }, [gameApi])
 
   const handleChange = e => {
     // copy the current table
@@ -23,7 +29,7 @@ const SudokuReplay = props => {
       // check if the game is over or not
       if (checkSolution(table, game.solution)) {
         // winning message
-        setGameApi({ over: true })
+        setGameApi({ ...gameApi, over: true })
         msgAlert({
           heading: 'Congratulation',
           message: 'You have successful completed the game.',
@@ -37,12 +43,19 @@ const SudokuReplay = props => {
     updateGame(objectToArray(table), gameApi, user)
   }
 
+  const handleClick = e => {
+    setTable(arrayToObject(gameApi.solution, gameApi.solution))
+    setGameApi({ ...gameApi, over: true })
+  }
+
   return (
     <div>
       <Board
         msgAlert={msgAlert}
         handleChange={handleChange}
         table={table} />
+
+      <button onClick={handleClick}>Give Up!</button>
     </div>
   )
 }
