@@ -1,7 +1,7 @@
 import React from 'react'
 
 const Cell = props => {
-  const { index, rowIndex, data, handleChange } = props
+  const { index, rowIndex, data, handleChange, msgAlert } = props
 
   let jsx = ''
 
@@ -21,31 +21,30 @@ const Cell = props => {
 
   const handleOnChange = e => {
     const value = e.target.value === '' ? '' : parseInt(e.target.value)
-    if (value > 9) {
-      return
-    }
     handleChange({ ...data, value: value })
+  }
+
+  const handleKeyPress = e => {
+    if (!['1', '2', '3', '4', '5', '6', '7', '8', '9'].includes(e.key)) {
+      msgAlert({
+        heading: 'Invalid Move',
+        message: 'Only number from 1 to 9 is available for Sudoku.',
+        variant: 'danger'
+      })
+    }
   }
 
   return (
     <input
-      type='number'
-      max='9'
+      type='text'
+      maxLength={1}
+      pattern={[0 - 9]}
       className={jsx}
       value={data.value ? data.value : ''}
       disabled={data.readonly}
-      onChange={handleOnChange} />
+      onChange={handleOnChange}
+      onKeyPress={handleKeyPress} />
   )
 }
 
 export default Cell
-
-// const handleKeyPress = e => {
-//   if (e.key === 'Enter') {
-//     console.log('A')
-//   } else {
-//     console.log('B')
-//   }
-// }
-
-// onKeyPress={handleKeyPress}

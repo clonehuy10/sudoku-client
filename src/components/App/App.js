@@ -10,6 +10,8 @@ import SignOut from '../SignOut/SignOut'
 import ChangePassword from '../ChangePassword/ChangePassword'
 
 import Sudoku from '../Sudoku/Sudoku'
+import History from '../History/History'
+import SudokuReplay from '../History/SudokuReplay'
 
 class App extends Component {
   constructor () {
@@ -57,9 +59,15 @@ class App extends Component {
             <ChangePassword msgAlert={this.msgAlert} user={user} />
           )} />
 
-          <Route path='/sudoku' render={() => (
-            <Sudoku msgAlert={this.msgAlert} />
+          <AuthenticatedRoute user={user} path='/sudoku' render={() => (
+            <Sudoku msgAlert={this.msgAlert} user={user} />
           )} />
+
+          <AuthenticatedRoute user={user} path='/history' render={() => (
+            <History msgAlert={this.msgAlert} user={user} />
+          )} />
+
+          <AuthenticatedRoute user={user} path='/sudokuReplay' component={SudokuReplay} />
         </main>
       </Fragment>
     )
