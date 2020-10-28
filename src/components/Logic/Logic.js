@@ -1,3 +1,5 @@
+import React, { Fragment } from 'react'
+
 export const arrayToObject = (board, solution) => {
   const result = { rows: [] }
 
@@ -47,24 +49,32 @@ export const checkSolution = (table, solved) => {
   return check
 }
 
-export const forViewOnly = (board) => {
-  const result = { rows: [] }
+export const timeConvert = time => {
+  const hours = `0${Math.floor(time / 3600)}`.slice(-2)
+  const minutes = `0${Math.floor(time / 60)}`.slice(-2)
+  const seconds = `0${time % 60}`.slice(-2)
 
-  for (let i = 0; i < 9; i++) {
-    const row = { cols: [], index: i }
-    for (let j = 0; j < 9; j++) {
-      const value = board[i * 9 + j]
-
-      const col = {
-        row: i,
-        col: j,
-        value: value,
-        readonly: true
-      }
-      row.cols.push(col)
-    }
-    result.rows.push(row)
-  }
-
-  return result
+  return <Fragment>{hours}:{minutes}:{seconds}</Fragment>
 }
+
+// export const forViewOnly = (board) => {
+//   const result = { rows: [] }
+
+//   for (let i = 0; i < 9; i++) {
+//     const row = { cols: [], index: i }
+//     for (let j = 0; j < 9; j++) {
+//       const value = board[i * 9 + j]
+
+//       const col = {
+//         row: i,
+//         col: j,
+//         value: value,
+//         readonly: true
+//       }
+//       row.cols.push(col)
+//     }
+//     result.rows.push(row)
+//   }
+
+//   return result
+// }

@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react'
 import Board from '../Sudoku/Board'
 import { updateGame } from '../../api/game'
 import { arrayToObject, objectToArray, checkSolution } from '../Logic/Logic'
+import Timer from '../Timer/Timer'
 
 const SudokuReplay = props => {
   const { game, user, msgAlert } = props.location.state
@@ -43,6 +44,12 @@ const SudokuReplay = props => {
     updateGame(objectToArray(table), gameApi, user)
   }
 
+  // function for timer
+  const handleTime = number => {
+    setGameApi({ ...gameApi, time: number })
+  }
+
+  // Get the solution
   const handleClick = e => {
     setTable(arrayToObject(gameApi.solution, gameApi.solution))
     setGameApi({ ...gameApi, over: true })
@@ -50,6 +57,10 @@ const SudokuReplay = props => {
 
   return (
     <div>
+      {!gameApi.over &&
+        <Timer
+          gameApi={gameApi}
+          handleTime={handleTime} />}
       <Board
         msgAlert={msgAlert}
         handleChange={handleChange}

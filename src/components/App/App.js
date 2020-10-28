@@ -9,6 +9,7 @@ import SignIn from '../SignIn/SignIn'
 import SignOut from '../SignOut/SignOut'
 import ChangePassword from '../ChangePassword/ChangePassword'
 
+import Home from '../Home/Home'
 import Sudoku from '../Sudoku/Sudoku'
 import History from '../History/History'
 import SudokuReplay from '../History/SudokuReplay'
@@ -46,7 +47,7 @@ class App extends Component {
           />
         ))}
         <main className="container">
-          <Route path='/sign-up' render={() => (
+          <Route exact path='/' render={() => (
             <SignUp msgAlert={this.msgAlert} setUser={this.setUser} />
           )} />
           <Route path='/sign-in' render={() => (
@@ -58,6 +59,8 @@ class App extends Component {
           <AuthenticatedRoute user={user} path='/change-password' render={() => (
             <ChangePassword msgAlert={this.msgAlert} user={user} />
           )} />
+
+          <AuthenticatedRoute user={user} path='/home' component={Home} />
 
           <AuthenticatedRoute user={user} path='/sudoku' render={() => (
             <Sudoku msgAlert={this.msgAlert} user={user} />

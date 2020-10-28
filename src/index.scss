@@ -1,27 +1,85 @@
 @import '~bootstrap/scss/bootstrap';
+$border-color: rgba(160, 230, 200, 1);
+$cell: hsla(174, 97%, 59%, 0.934);
+
+body {
+  margin: 0;
+  padding: 0;
+  background-image: url('https://i.imgur.com/UpPIc0U.jpg');
+}
 
 .cell {
-  border: 0.5px solid black;
+  background: none;
+  backdrop-filter: blur(15px);
+  border: 0.1px solid rgba(33, 255, 244, 0.4);
   text-align: center;
   font-size: 120%;
   width: 5vw;
   height: 5vw;
+
+  &:hover {
+    background-color: rgba(119, 150, 117, 0.5);
+  }
 }
 
 .cellRight {
-  border-right: 3px solid black;
+  border-right: 2px solid $cell;
 }
 
 .cellBottom {
-  border-bottom: 3px solid black;
+  border-bottom: 2px solid $cell;
+}
+
+.clockBox {
+  font-size: 10vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .clock {
+    color: $border-color;
+    box-shadow: 1px 1px 20px white;
+    text-shadow: 1px 1px 5px white;
+    border: 2px solid $border-color;
+    border-radius: 10px;
+    padding: 20px;
+  }
+
+  .text {
+    color: $cell;
+    font-size: 20px;
+  }
+}
+
+.form {
+  color: $cell;
+  border: 1px solid $border-color;
+  border-radius: 20px;
+  box-shadow: 1px 1px 20px white;
+  margin-top: 30px;
+  padding: 30px;
+
+  .formButton {
+    color: $cell;
+    border: 1px solid $border-color;
+    box-shadow: 1px 1px 20px white;
+    margin: 5px;
+    margin-right: 25px;
+  }
+
+  .formLink {
+    color: $cell;
+    font-size: 20px;
+    text-shadow: 0.1px 0.1px 2px white;
+  }
 }
 
 .given {
-  color: green;
+  color: rgb(6, 234, 242);
 }
 
 .userInput {
-  color: red;
+  color: rgb(252, 224, 7);
 }
 
 .viewBoard {

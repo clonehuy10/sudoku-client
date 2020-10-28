@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { withRouter } from 'react-router-dom'
+import { withRouter, Link } from 'react-router-dom'
 
 import { signIn } from '../../api/auth'
 import messages from '../AutoDismissAlert/messages'
@@ -33,7 +33,7 @@ class SignIn extends Component {
         message: messages.signInSuccess,
         variant: 'success'
       }))
-      .then(() => history.push('/'))
+      .then(() => history.push('/home'))
       .catch(error => {
         this.setState({ email: '', password: '' })
         msgAlert({
@@ -49,7 +49,7 @@ class SignIn extends Component {
 
     return (
       <div className="row">
-        <div className="col-sm-10 col-md-8 mx-auto mt-5">
+        <div className="col-sm-10 col-lg-5 mx-auto mt-5 form">
           <h3>Sign In</h3>
           <Form onSubmit={this.onSignIn}>
             <Form.Group controlId="email">
@@ -75,11 +75,14 @@ class SignIn extends Component {
               />
             </Form.Group>
             <Button
-              variant="primary"
+              className='formButton'
+              variant="default"
               type="submit"
             >
               Submit
             </Button>
+
+            <Link className='formLink' to='/'>Need to sign up?</Link>
           </Form>
         </div>
       </div>

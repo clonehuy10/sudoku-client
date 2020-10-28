@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 
 import Board from './Board'
 import { createGame, updateGame } from '../../api/game'
+import Timer from '../Timer/Timer'
 
 import generator from 'sudoku'
 // makepuzzle, solvepuzzle, ratepuzzle
@@ -49,6 +50,7 @@ const Sudoku = props => {
     }
   }, [gameApi])
 
+  // play the game
   const handleChange = e => {
     // copy the current table
     const copy = Object.assign({}, table)
@@ -76,6 +78,11 @@ const Sudoku = props => {
     }
   }
 
+  // function for timer
+  const handleTime = number => {
+    setGameApi({ ...gameApi, time: number })
+  }
+
   // Get the solution
   const handleClick = e => {
     setTable(arrayToObject(solution, solution))
@@ -95,12 +102,17 @@ const Sudoku = props => {
     //   }))
   }
 
-  if (table.rows.length === 0) {
+  // stop the render if table and gameApi is not loaded
+  if (table.rows.length === 0 || gameApi === null) {
     return ''
   }
 
   return (
     <div>
+      {!gameApi.over &&
+        <Timer
+          gameApi={gameApi}
+          handleTime={handleTime} />}
       <Board
         msgAlert={props.msgAlert}
         handleChange={handleChange}

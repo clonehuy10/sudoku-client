@@ -9,7 +9,7 @@ const History = props => {
   const [data, setData] = useState([])
 
   const [currentPage, setCurrentPage] = useState(1)
-  const [itemsPerPage] = useState(4)
+  const [itemsPerPage] = useState(10)
 
   useEffect(() => {
     showGame(props.user)
@@ -55,12 +55,14 @@ const History = props => {
   const indexOfLast = currentPage * itemsPerPage
   const indexOfFirst = indexOfLast - itemsPerPage
   const currentData = data.slice(indexOfFirst, indexOfLast)
-
+  console.log('data', data)
   return (
-    <div>
+    <div className='container'>
       <DataOnCurrentPage
         currentData={currentData}
         handleDelete={handleDelete}
+        user={props.user}
+        msgAlert={props.msgAlert}
       />
       <Pagination
         itemsPerPage={itemsPerPage}

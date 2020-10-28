@@ -11,7 +11,8 @@ export const createGame = (table, solution, user) => {
     data: {
       game: {
         table: table,
-        solution: solution
+        solution: solution,
+        time: 0
       }
     }
   })
@@ -27,7 +28,8 @@ export const updateGame = (table, gameApi, user) => {
     data: {
       game: {
         table: table,
-        over: gameApi.over
+        over: gameApi.over,
+        time: gameApi.time
       }
     }
   })
