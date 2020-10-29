@@ -48,6 +48,21 @@ body {
   &:hover {
     background-color: rgba(119, 150, 117, 0.5);
   }
+  
+  @media (max-width: 850px) {
+    width: 7vw;
+    height: 7vw;
+  }
+
+  @media (max-width: 740px) {
+    width: 8vw;
+    height: 8vw;
+  }
+
+  @media (max-width: 600px) {
+    width: 10vw;
+    height: 10vw;
+  }
 }
 
 .cellRight {
@@ -166,10 +181,10 @@ body {
 }
 
 .navbar-dark .navbar-text {
-  font-size: 25px;
+  font-size: 20px;
   color: $cell;
 
-  @media (max-width: 770px) {
+  @media (max-width: 850px) {
     font-size: 0;
   }
 }
@@ -177,7 +192,7 @@ body {
 .navbar-dark .navbar-nav .nav-link {
   font-size: 30px;
 
-  @media (max-width: 770px) {
+  @media (max-width: 800px) {
     font-size: 20px;
   }
 }
