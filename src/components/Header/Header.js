@@ -4,6 +4,7 @@ import Navbar from 'react-bootstrap/Navbar'
 import NavDropdown from 'react-bootstrap/NavDropdown'
 
 import Clock from '../Clock/Clock'
+import { VscSettingsGear } from 'react-icons/vsc'
 
 const authenticatedOptions = (
   <Fragment>
@@ -41,7 +42,7 @@ const Header = ({ user }) => (
       { user && <span className="navbar-text mr-2">Welcome, {user.email}</span>}
       <NavDropdown
         drop='left'
-        title="Setting"
+        title={<VscSettingsGear />}
         id="collasible-nav-dropdown">
         { user ? authenticatedOptions : unauthenticatedOptions }
       </NavDropdown>

@@ -75,13 +75,21 @@ body {
     color: rgb(255, 246, 115);
     font-size: 100%  ;
     text-align: center;
+
+    @media (max-width: 770px) {
+      width: 100%;
+    }
   }
 
   .startButton {
     color: $cell;
     border: 1px solid $border-color;
     box-shadow: 1px 1px 20px white;
-    font-size: 4vw;
+    font-size: 50px;
+
+    @media (max-width: 550px) {
+      font-size: 30px;
+    }
   }
 }
 
@@ -125,6 +133,10 @@ body {
   font-size: 30px;
   color: $border-color;
   text-shadow: 1px 1px 5px white;
+
+  @media (max-width: 550px) {
+    font-size: 20px;
+  }
 }
 
 @keyframes changeColor {
@@ -137,25 +149,37 @@ body {
   color: $cell;
   text-shadow: 1px 1px 10px yellow;
   font-family: 'Grenze Gotisch', cursive;
-  font-size: 5vw;
+  font-size: 60px;
 
   top: 1px;
   position: absolute;
-  left: 44%;
+  left: 40%;
 
   animation-name: changeColor;
   animation-duration: 3s;
   animation-iteration-count: infinite;
   animation-direction: alternate;
+
+  @media (max-width: 770px) {
+    font-size: 50px;
+  }
 }
 
 .navbar-dark .navbar-text {
-  font-size: 2vw;
+  font-size: 25px;
   color: $cell;
+
+  @media (max-width: 770px) {
+    font-size: 0;
+  }
 }
 
 .navbar-dark .navbar-nav .nav-link {
-  font-size: 2vw;
+  font-size: 30px;
+
+  @media (max-width: 770px) {
+    font-size: 20px;
+  }
 }
 
 .historyTable {
