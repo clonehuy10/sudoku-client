@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react'
+import { Link } from 'react-router-dom'
+import Button from 'react-bootstrap/Button'
 
 import Board from '../Sudoku/Board'
-import { updateGame } from '../../api/game'
+import { updateGame, deleteGame } from '../../api/game'
 import { arrayToObject, objectToArray, checkSolution } from '../Logic/Logic'
 import Timer from '../Timer/Timer'
 
@@ -10,9 +12,10 @@ const SudokuReplay = props => {
 
   const [gameApi, setGameApi] = useState(props.location.state.game)
   const [table, setTable] = useState(arrayToObject(game.table, game.solution))
+  const [magic, setMagic] = useState(false)
 
   useEffect(() => {
-    if (gameApi !== null) {
+    if (gameApi !== null && !magic) {
       updateGame(objectToArray(table), gameApi, user)
     }
   }, [gameApi])
@@ -52,21 +55,53 @@ const SudokuReplay = props => {
   // Get the solution
   const handleClick = e => {
     setTable(arrayToObject(gameApi.solution, gameApi.solution))
+
+    setMagic(true)
+
+    // send message that the board has been completed by magic
+    deleteGame(gameApi._id, user)
+      .then(() => msgAlert({
+        heading: 'Try again next time',
+        message: 'The board has been competed for you. It is also removed from your history.',
+        variant: 'success'
+      }))
+      .catch(() => msgAlert({
+        heading: 'Try again next time',
+        message: 'The board has been competed for you. It is also removed from your history.',
+        variant: 'danger'
+      }))
+
     setGameApi({ ...gameApi, over: true })
   }
 
   return (
-    <div>
-      {!gameApi.over &&
-        <Timer
-          gameApi={gameApi}
-          handleTime={handleTime} />}
+    <div className='row gameBoard'>
+      <div className='col-12 timer'>
+        {!gameApi.over &&
+          <Timer
+            gameApi={gameApi}
+            handleTime={handleTime} />}
+      </div>
       <Board
         msgAlert={msgAlert}
         handleChange={handleChange}
         table={table} />
-
-      <button onClick={handleClick}>Give Up!</button>
+      <div className='col-12 solveBox'>
+        {gameApi.over
+          ? <Link to='/history'>
+            <Button
+              className='solveButton'
+              variant='default'>
+              Back to History
+            </Button>
+          </Link>
+          : <Button
+            className='solveButton'
+            variant='default'
+            onClick={handleClick}>
+            Give Up!
+          </Button>}
+      </div>
     </div>
   )
 }

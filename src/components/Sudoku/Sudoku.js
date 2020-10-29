@@ -1,7 +1,9 @@
-import React, { useState, useEffect } from 'react'
+import React, { Fragment, useState, useEffect } from 'react'
+import Button from 'react-bootstrap/Button'
+import { Link } from 'react-router-dom'
 
 import Board from './Board'
-import { createGame, updateGame } from '../../api/game'
+import { createGame, updateGame, deleteGame } from '../../api/game'
 import Timer from '../Timer/Timer'
 
 import generator from 'sudoku'
@@ -16,6 +18,8 @@ const Sudoku = props => {
   })
   const [gameApi, setGameApi] = useState(null)
   const [solution, setSolution] = useState([])
+  const [magic, setMagic] = useState(false)
+
   // run once when component mounts
   useEffect(() => {
     // generate sudoku table and its solution
@@ -45,7 +49,7 @@ const Sudoku = props => {
   }, [])
 
   useEffect(() => {
-    if (gameApi !== null) {
+    if (gameApi !== null && !magic) {
       updateGame(objectToArray(table), gameApi, props.user)
     }
   }, [gameApi])
@@ -86,20 +90,23 @@ const Sudoku = props => {
   // Get the solution
   const handleClick = e => {
     setTable(arrayToObject(solution, solution))
-    setGameApi({ ...gameApi, over: true })
 
-    // // send message that the board has been completed by magic
-    // deleteGame(gameApi._id, props.user)
-    //   .then(() => props.msgAlert({
-    //     heading: 'Try again next time',
-    //     message: 'The board has been competed for you. It is also removed from your history.',
-    //     variant: 'success'
-    //   }))
-    //   .catch(() => props.msgAlert({
-    //     heading: 'Try again next time',
-    //     message: 'The board has been competed for you. It is also removed from your history.',
-    //     variant: 'danger'
-    //   }))
+    setMagic(true)
+
+    // send message that the board has been completed by magic
+    deleteGame(gameApi._id, props.user)
+      .then(() => props.msgAlert({
+        heading: 'Try again next time',
+        message: 'The board has been competed for you. It is also removed from your history.',
+        variant: 'success'
+      }))
+      .catch(() => props.msgAlert({
+        heading: 'Try again next time',
+        message: 'The board has been competed for you. It is also removed from your history.',
+        variant: 'danger'
+      }))
+
+    setGameApi({ ...gameApi, over: true })
   }
 
   // stop the render if table and gameApi is not loaded
@@ -108,17 +115,43 @@ const Sudoku = props => {
   }
 
   return (
-    <div>
-      {!gameApi.over &&
-        <Timer
-          gameApi={gameApi}
-          handleTime={handleTime} />}
+    <div className='row gameBoard'>
+      <div className='col-12 timer'>
+        {!gameApi.over &&
+          <Timer
+            gameApi={gameApi}
+            handleTime={handleTime} />}
+      </div>
       <Board
         msgAlert={props.msgAlert}
         handleChange={handleChange}
         table={table} />
+      <div className='col-12 solveBox'>
+        {gameApi.over
+          ? <Fragment>
+            <Link to='/history'>
+              <Button
+                className='solveButton'
+                variant='default'>
+                View History
+              </Button>
+            </Link>
 
-      <button onClick={handleClick}>Give Up!</button>
+            <Link to='/home'>
+              <Button
+                className='solveButton'
+                variant='default'>
+                Back to Home
+              </Button>
+            </Link>
+          </Fragment>
+          : <Button
+            className='solveButton'
+            variant='default'
+            onClick={handleClick}>
+            Give Up!
+          </Button>}
+      </div>
     </div>
   )
 }

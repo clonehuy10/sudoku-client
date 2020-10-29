@@ -1,4 +1,6 @@
 @import '~bootstrap/scss/bootstrap';
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:ital@1&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Grenze+Gotisch:wght@300&display=swap');
 $border-color: rgba(160, 230, 200, 1);
 $cell: hsla(174, 97%, 59%, 0.934);
 
@@ -6,6 +8,31 @@ body {
   margin: 0;
   padding: 0;
   background-image: url('https://i.imgur.com/UpPIc0U.jpg');
+}
+
+.gameBoard {
+  justify-content: center;
+
+  .timer {
+    display: flex;
+    justify-content: center;
+    margin: 15px;
+    font-size: 15px;
+    color: $border-color;
+    text-shadow: 1px 1px 5px white;
+  }
+
+  .solveBox {
+    margin: 30px;
+    display: flex;
+    justify-content: center;
+
+    .solveButton {
+      color: $cell;
+      border: 1px solid $border-color;
+      box-shadow: 1px 1px 20px white;
+    }
+  }
 }
 
 .cell {
@@ -16,6 +43,7 @@ body {
   font-size: 120%;
   width: 5vw;
   height: 5vw;
+  margin: 0.2px;
 
   &:hover {
     background-color: rgba(119, 150, 117, 0.5);
@@ -30,24 +58,30 @@ body {
   border-bottom: 2px solid $cell;
 }
 
-.clockBox {
-  font-size: 10vh;
+.homeBox {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
 
-  .clock {
-    color: $border-color;
-    box-shadow: 1px 1px 20px white;
-    text-shadow: 1px 1px 5px white;
-    border: 2px solid $border-color;
+  .text {
+    border: 1px solid $border-color;
     border-radius: 10px;
-    padding: 20px;
+    box-shadow: 1px 1px 20px white;
+    backdrop-filter: 10px;
+    margin: 30px;
+    padding: 10px;
+    width: 50%;
+    color: rgb(255, 246, 115);
+    font-size: 100%  ;
+    text-align: center;
   }
 
-  .text {
+  .startButton {
     color: $cell;
-    font-size: 20px;
+    border: 1px solid $border-color;
+    box-shadow: 1px 1px 20px white;
+    font-size: 4vw;
   }
 }
 
@@ -56,6 +90,7 @@ body {
   border: 1px solid $border-color;
   border-radius: 20px;
   box-shadow: 1px 1px 20px white;
+  font-family: 'Roboto Mono', monospace;
   margin-top: 30px;
   padding: 30px;
 
@@ -84,4 +119,45 @@ body {
 
 .viewBoard {
   margin: 10px;
+}
+
+.clockHead {
+  font-size: 30px;
+  color: $border-color;
+  text-shadow: 1px 1px 5px white;
+}
+
+@keyframes changeColor {
+  0%   {color:white;}
+  100%  {color:$cell;}
+}
+
+.textHead {
+  align-self: center;
+  color: $cell;
+  text-shadow: 1px 1px 10px yellow;
+  font-family: 'Grenze Gotisch', cursive;
+  font-size: 5vw;
+
+  top: 1px;
+  position: absolute;
+  left: 44%;
+
+  animation-name: changeColor;
+  animation-duration: 3s;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+}
+
+.navbar-dark .navbar-text {
+  font-size: 2vw;
+  color: $cell;
+}
+
+.navbar-dark .navbar-nav .nav-link {
+  font-size: 2vw;
+}
+
+.historyTable {
+  margin-top: 20px;
 }

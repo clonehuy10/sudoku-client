@@ -1,6 +1,6 @@
 import React, { Fragment, useState, useEffect } from 'react'
 
-const Clock = props => {
+const Clock = () => {
   const [timeString, setTimeString] = useState('')
 
   const formatDate = () => {

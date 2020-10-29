@@ -21,7 +21,7 @@ const DataOnCurrentPage = props => {
   // Table: StartDate, TimeSpent, Solved?, Action
   return (
     <Fragment>
-      <Table striped bordered hover variant="dark">
+      <Table className='historyTable' striped bordered hover variant="dark">
         <thead>
           <tr>
             <th>Start Date</th>
