@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import Button from 'react-bootstrap/Button'
 import { Link } from 'react-router-dom'
 
@@ -122,29 +122,26 @@ const Sudoku = props => {
             gameApi={gameApi}
             handleTime={handleTime} />}
       </div>
+
+      <div className='col-12 homeButtonBox'>
+        <Link to='/home'>
+          <Button className='homeButton' variant='default'>Home</Button>
+        </Link>
+      </div>
+
       <Board
         msgAlert={props.msgAlert}
         handleChange={handleChange}
         table={table} />
       <div className='col-12 solveBox'>
         {gameApi.over
-          ? <Fragment>
-            <Link to='/history'>
-              <Button
-                className='solveButton'
-                variant='default'>
-                View History
-              </Button>
-            </Link>
-
-            <Link to='/home'>
-              <Button
-                className='solveButton'
-                variant='default'>
-                Back to Home
-              </Button>
-            </Link>
-          </Fragment>
+          ? <Link to='/history'>
+            <Button
+              className='solveButton'
+              variant='default'>
+              View History
+            </Button>
+          </Link>
           : <Button
             className='solveButton'
             variant='default'

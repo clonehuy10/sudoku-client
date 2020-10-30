@@ -1,5 +1,6 @@
 import React, { Fragment } from 'react'
 import { Link } from 'react-router-dom'
+import Button from 'react-bootstrap/Button'
 
 import { timeConvert } from '../Logic/Logic'
 // import Board from '../Sudoku/Board'
@@ -37,7 +38,13 @@ const DataOnCurrentPage = props => {
               <td>{timeConvert(game.time)}</td>
               <td>{game.over ? 'Yes' : 'No'}</td>
               <td>
-                <button id={game._id} onClick={handleDelete}>Delete</button>
+                <Button
+                  id={game._id}
+                  variant='danger'
+                  onClick={handleDelete}>
+                  Delete
+                </Button>
+
                 {game.over
                   ? ''
                   : <Link to={{
@@ -47,7 +54,9 @@ const DataOnCurrentPage = props => {
                       user: user,
                       msgAlert: msgAlert
                     }
-                  }}><button>Keep Playing</button></Link>}
+                  }}>
+                    <Button className='ml-2' variant='info'>Keep Playing</Button>
+                  </Link>}
               </td>
             </tr>
           ))}

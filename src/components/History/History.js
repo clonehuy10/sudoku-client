@@ -58,17 +58,17 @@ const History = props => {
   console.log('data', data)
   return (
     <div className='container'>
-      <DataOnCurrentPage
-        currentData={currentData}
-        handleDelete={handleDelete}
-        user={props.user}
-        msgAlert={props.msgAlert}
-      />
       <Pagination
         itemsPerPage={itemsPerPage}
         currentPage={currentPage}
         totalItems={data.length}
         paginate={handlePaginate}
+      />
+      <DataOnCurrentPage
+        currentData={currentData}
+        handleDelete={handleDelete}
+        user={props.user}
+        msgAlert={props.msgAlert}
       />
     </div>
   )

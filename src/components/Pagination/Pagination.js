@@ -78,6 +78,7 @@ const PaginationButtons = props => {
         {pageNumbers.map(number => (
           <Pagination.Item
             key={number}
+            bg='dark'
             className='page-item paginationButtons'
             active={number === currentPage}
             onClick={() => paginate(number)}

@@ -16,10 +16,22 @@ body {
   .timer {
     display: flex;
     justify-content: center;
-    margin: 15px;
+    margin-top: 15px;
     font-size: 15px;
     color: $border-color;
     text-shadow: 1px 1px 5px white;
+  }
+
+  .homeButtonBox {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+  
+    .homeButton {
+      color: $cell;
+      border: 1px solid $border-color;
+      box-shadow: 1px 1px 20px white;
+    }
   }
 
   .solveBox {
@@ -199,4 +211,16 @@ body {
 
 .historyTable {
   margin-top: 20px;
+}
+
+.paginationButtons {
+  margin-top: 20px;
+
+  a {
+    border: 1px solid $border-color;
+    box-shadow: 0.1px 0.1px 2px white;
+    background: none;
+    color: $cell;
+    font-weight: bold;
+  }
 }
